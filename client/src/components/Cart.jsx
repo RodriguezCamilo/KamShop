@@ -24,13 +24,12 @@ function Cart() {
 
     const handleBuy = async () => {
         await handlePurchase()
-        setPurchased(true)
-
+        if(ticketData != null) setPurchased(true)
     }
 
     return (
         <> {!purchased ?
-            <Card className=' py-3 self-center min-w-[30vw] max-h-[90vh] min-h-[30vh] '>
+            <Card className=' py-3 self-center w-4/5 md:w-[30vw] max-h-[90vh] min-h-[30vh] '>
                 {!isLogged ?
                     <h3>Sign in to Buy!</h3>
                     : (
@@ -46,14 +45,14 @@ function Cart() {
                             <Divider />
                             <CardFooter className='flex justify-center gap-6'>
                                 <Button className='place-self-center' color='danger' onClick={handleEmpty}>Empty</Button>
-                                <Button className='place-self-center' color='primary' onClick={handleBuy} >Purchase</Button>
+                                {total > 1 && <Button className='place-self-center' color='primary' onClick={handleBuy} >Purchase</Button>}
                             </CardFooter>
                         </>
                     )
                 }
 
             </Card> :
-            <Card className=' py-3 self-center min-w-[30vw] max-h-[90vh] '>
+            <Card className=' py-3 self-center w-4/5 md:w-[30vw] max-h-[90vh] '>
                 <CardHeader className='flex justify-center'>
                     <h1 className='text-2xl font-bold'>Ticket</h1>
                 </CardHeader>

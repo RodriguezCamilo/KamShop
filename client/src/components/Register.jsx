@@ -47,7 +47,7 @@ const Register = () => {
     }
 
     return (
-        <Card className='py-3 self-center min-w-[30vw] max-h-[90vh]'>
+        <Card className='py-3 self-center md:w-[30vw] w-4/5 max-h-[90vh]'>
             <CardHeader className='flex justify-center'>
                 <h1 className='text-2xl font-bold'>Registrarse</h1>
             </CardHeader>

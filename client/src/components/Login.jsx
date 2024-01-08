@@ -51,11 +51,11 @@ export default function Login() {
 
     }
     return (
-            <Card className=' py-3 self-center w-[30vw] max-h-[70vh] '>
+            <Card className=' py-3 self-center sm:w-[30vw] w-4/5 max-h-[70vh] '>
                 <CardHeader className='flex justify-center'>
                     <h1 className='text-2xl font-bold'>Iniciar sesión</h1>
                 </CardHeader>
-                <CardBody className='flex justify-center overflow-hidden'>
+                <CardBody className='flex justify-center overflow-hidden gap-2'>
 
                     <form className='grid gap-3' id="login" onSubmit={handleSubmit} ref={formRef}>
 
@@ -68,7 +68,7 @@ export default function Login() {
                         {progress ? <Spinner color='primary' className='place-self-center' /> : <Button className='place-self-center' color='primary' type="submit"  > Iniciar sesión </Button>}
 
                     </form>
-                    <Link size='sm' onClick={()=>navigate('/recovery-password')}>Olvidé mi contraseña</Link>
+                    <Link size='sm ' onClick={()=>navigate('/recovery-password')}>Olvidé mi contraseña</Link>
                 </CardBody>
                 <Divider />
                 <CardFooter className='grid gap-4 justify-center'>

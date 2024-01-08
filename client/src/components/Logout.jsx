@@ -34,7 +34,7 @@ export const Logout = () => {
     }
 
     return (
-        <Card className=' py-3 self-center w-[30vw] max-h-[70vh] '>
+        <Card className=' py-3 self-center w-4/5 md:w-[30vw] max-h-[70vh] '>
             <CardHeader className='flex justify-center'>
                 <h1 className='text-2xl font-bold'>¿Estas seguro que quieres cerrar sesión?</h1>
             </CardHeader>

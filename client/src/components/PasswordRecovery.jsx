@@ -47,7 +47,7 @@ function PasswordRecovery() {
     }
 
   return (
-    <Card className=' py-3 self-center w-[30vw] max-h-[70vh] '>
+    <Card className=' py-3 self-center md:w-[30vw] w-4/5 max-h-[70vh] '>
                 <CardHeader className='flex justify-center'>
                     <h1 className='text-2xl font-bold'>Reestablecer contraseña</h1>
                 </CardHeader>

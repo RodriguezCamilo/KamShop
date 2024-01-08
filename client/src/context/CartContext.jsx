@@ -34,7 +34,7 @@ export const CartProvider = ({ children }) => {
             let individual = cartData[index].quantity * cartData[index].id_prod.price
             data += individual
         }
-        if(userInfo?.user?.rol == 'premium') {
+        if (userInfo?.user?.rol == 'premium') {
             data = data * 0.9
         }
         setTotal(data)
@@ -48,30 +48,25 @@ export const CartProvider = ({ children }) => {
                 'Content-type': 'application/json'
             }
         })
-            .then(async response => {
-                if (response.ok) {
-                    let data = await response.json()
-                    console.log(data.mensaje)
-                }
-            })
     }
 
     const handlePurchase = async () => {
-        await fetch(`http://localhost:3000/api/carts/${cart}/purchase`, {
-            method: 'POST',
-            headers: {
-                'Authorization': `${token}`,
-                'Content-type': 'application/json'
-            },
-            body: JSON.stringify(userInfo)
-        })
-            .then(async response => {
-                if (response.ok) {
-                    let res = await response.json()
-                    await setTicketData(res)
-                }
+        if (cartData[0] != undefined) {
+            await fetch(`http://localhost:3000/api/carts/${cart}/purchase`, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `${token}`,
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify(userInfo)
             })
-
+                .then(async response => {
+                    if (response.ok) {
+                        let res = await response.json()
+                        await setTicketData(res)
+                    }
+                })
+        }
     }
 
     return (

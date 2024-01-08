@@ -35,7 +35,7 @@ const ItemCount = ({ stock = 10, onAdd }) => {
         <>
             {stock > 0
                 ? <div className="flex w-full">
-                    {clicked ? <Button color="primary" as={Link} to={"/cart"}> Cart </Button> : (
+                    {clicked ? <Card className="flex w-full items-center p-2 "> <Button color="primary" className="font-semibold text-lg" as={Link} to={"/cart"}> Cart </Button></Card> : (
                         <div className="w-full mx-2">
                             <Card className="flex flex-row justify-between items-center p-2 ">
                                 <div className="flex flex-row gap-4">
@@ -46,7 +46,6 @@ const ItemCount = ({ stock = 10, onAdd }) => {
                                 <div>
                                     <Button color="primary" className="font-semibold text-lg" onClick={() => add()}>Add to cart</Button>
                                 </div>
-
                             </Card>
                         </div>)}
                 </div>
