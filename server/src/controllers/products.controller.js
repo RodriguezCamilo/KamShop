@@ -5,20 +5,23 @@ export const getProducts = async (req, res) =>{
 
     try {
         let query = {}
-        let link 
-        if (category){
-            query.category = category
-            link = `&category=${query.category}`
-        }
 
+        if (category != "undefined"){
+            query.category = category
+        }
+    
         let options = {
-            limit: parseInt(limit) || 8,
-            page: parseInt(page) || 1,
+            limit: parseInt(limit, 10) || 8,
+            page: parseInt(page, 10) || 1,
             sort: {
-                price: sort || -1
+                price: -1
             }
         }
 
+        if (sort != "undefined") {
+            options.sort.price = sort
+        }
+        
         const prods = await productModel.paginate(query, options)
 
         const respuesta = {
@@ -29,9 +32,7 @@ export const getProducts = async (req, res) =>{
             nextPage: prods.nextPage,
             page: prods.page,
             hasPrevPage: prods.hasPrevPage,
-            hasNextPage: prods.hasNextPage,
-            prevLink: prods.hasPrevPage ? `http://${req.headers.host}${req.baseUrl}?limit=${options.limit}&page=${prods.prevPage}${link || ''}&sort=${options.sort.price}` : null,
-            nextLink: prods.hasNextPage ? `http://${req.headers.host}${req.baseUrl}?limit=${options.limit}&page=${prods.nextPage}${link || ''}&sort=${options.sort.price}` : null
+            hasNextPage: prods.hasNextPage
         }
         res.status(200).send({ respuesta: respuesta })
         
