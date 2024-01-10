@@ -108,3 +108,29 @@ export const resetPassword = async (req, res) => {
         res.status(500).send(`Error al reestablecer contraseña ${error}`)
     }
 }
+
+
+export const uploadFile = async (req, res) => {
+    const { id } = req.params
+    const files = req.files
+    if (!files || files.length === 0) {
+        return res.status(400).send({ message: 'No se subieron archivos.' });
+    }
+    try {
+        const user = await userModel.findById(id)
+        if (!user) {
+            return res.status(404).send({ message: 'Usuario no encontrado.' });
+        }
+        const updatedDocuments = files.map(file => ({
+            name: file.originalname,
+            reference: file.path
+        }))
+        user.documents.push(...updatedDocuments);
+        await user.save();
+
+        res.status(200).send({ message: 'Documentos subidos exitosamente.', documents: user.documents });
+    } catch (error) {
+        console.error('Error al subir documentos:', error);
+        res.status(500).send({ message: 'Error al subir documentos' });
+    }
+}

@@ -14,10 +14,12 @@ export const postLogin = async (req, res) => {
             email: req.user.email,
             rol: req.user.rol,
             cart: req.user.cart,
+            lastConnection: req.user.lastConnection,
             __v: req.user.__v
 
         }
         const token = generateToken(resuser)
+        req.user.lastConnection = new Date()
         res.status(200).send({token})
 
     } catch (error) {

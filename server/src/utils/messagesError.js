@@ -20,7 +20,7 @@ export const authorization = (rol) => {
         if (!req.user) {
             return res.status(401).send({ error: 'Usuario no autorizado' })
         }
-        if (!rol.includes(req.user.user.rol)) {
+        if (!rol.includes(req.user.rol)) {
             return res.status(403).send({ error: 'Usuario no tiene los permisos necesarios' })
         }
         next()
