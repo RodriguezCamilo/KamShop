@@ -1,3 +1,4 @@
+import { sendTicket } from "../config/nodemailer.js"
 import { cartModel } from "../models/carts.models.js"
 import { productModel } from "../models/products.models.js"
 import { ticketModel } from '../models/tickets.models.js'
@@ -201,6 +202,7 @@ export const purchaseCart = async (req, res) => {
             const updatedCart = await cartModel.findByIdAndUpdate(cid, { products: [] }, { new: true })
 
             if (updatedCart) {
+                sendTicket(purchaser, ticket)
                 return res.status(200).send({ mensaje: "Ticket created successfully", payload: { ticket } })
             }
         }

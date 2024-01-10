@@ -51,7 +51,7 @@ export default function Login() {
 
     }
     return (
-            <Card className=' py-3 self-center sm:w-[30vw] w-4/5 max-h-[70vh] '>
+            <Card className=' py-3 self-center md:w-[30vw] w-4/5 max-h-[70vh] '>
                 <CardHeader className='flex justify-center'>
                     <h1 className='text-2xl font-bold'>Iniciar sesión</h1>
                 </CardHeader>

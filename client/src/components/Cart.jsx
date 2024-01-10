@@ -4,6 +4,7 @@ import { LoggedContext } from '../context/LoggedContext.jsx';
 import { useNavigate } from 'react-router-dom';
 import CartProductList from './CartProductList.jsx';
 import { CartContext } from '../context/CartContext.jsx';
+import {Price} from "../components/Price.jsx"
 
 
 function Cart() {
@@ -57,9 +58,9 @@ function Cart() {
                     <h1 className='text-2xl font-bold'>Ticket</h1>
                 </CardHeader>
                 <CardBody className='flex justify-center text-center py-1 gap-1'>
-                    <h2 className='font-semibold'>{ticketData.mensaje}</h2>
-                    <h3>Code: {ticketData.payload.ticket.code}</h3>
-                    <h3>Amount: {ticketData.payload.ticket.amount}</h3>
+                    <h2 className='font-semibold'>Le hemos enviado un mail con la siguiente información</h2>
+                    <h3>Codigo: {ticketData.payload.ticket.code}</h3>
+                    <h3>Costo: $ <Price amount={ticketData.payload.ticket.amount}/></h3>
                 </CardBody>
             </Card>}
 
