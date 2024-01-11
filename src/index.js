@@ -4,7 +4,6 @@ import { __dirname } from './path.js'
 import express from 'express'
 import mongoose from 'mongoose'
 import MongoStore from 'connect-mongo'
-import { Server } from 'socket.io'
 import cors from 'cors'
 
 import prodsRouter from "./routes/products.routes.js"
@@ -12,7 +11,6 @@ import userRouter from './routes/users.routes.js'
 import cartRouter from "./routes/carts.routes.js"
 import sessionRouter from './routes/sessions.routes.js'
 
-import { productModel } from './models/products.models.js'
 
 
 import cookieParser from 'cookie-parser'
@@ -58,7 +56,7 @@ const swaggerOptions = {
 
 const specs = swaggerJSDoc(swaggerOptions)
 
-const serverExpress = app.listen(PORT, () => {
+app.listen(PORT, () => {
     console.log(`Server on port ${PORT}`)
 })
 
@@ -92,25 +90,6 @@ app.use(passport.session())
 app.use(addLogger)
 app.use('/apidocs', swaggerUiExpress.serve, swaggerUiExpress.setup(specs))
 
-//Socket
-
-
-const io = new Server(serverExpress)
-
-io.on('connection', (socket) => {
-    console.log("Servidor Socket.io conectado")
-
-    socket.on("llamarProductos", async () => {
-        const products = await productModel.find()
-        socket.emit("productos", products)
-    })
-
-    socket.on("nuevoProducto", async (nuevoProd) => {
-        const { title, description, price, stock, category, code, thumbnail } = nuevoProd
-        await productModel.create({ title, description, price, stock, category, code, thumbnail })
-    })
-
-})
 
 //Routes 
 
