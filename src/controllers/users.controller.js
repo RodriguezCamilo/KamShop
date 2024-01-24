@@ -15,6 +15,17 @@ export const getUsers = async (req, res) => {
     }
 }
 
+export const getUsersLimited = async (req, res) => {
+    const { limit } = req.query
+
+    try {
+        const users = await userModel.find({}, 'firstName email rol').limit(limit)
+        res.status(200).send({ respuesta: 'OK', mensaje: users })
+    } catch (error) {
+        res.status(400).send({ respuesta: 'Error en consultar usuarios', mensaje: error })
+    }
+}
+
 export const getUser = async (req, res) => {
     const { id } = req.params
 

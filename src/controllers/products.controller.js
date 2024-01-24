@@ -6,7 +6,7 @@ export const getProducts = async (req, res) =>{
     try {
         let query = {}
 
-        if (category != "undefined"){
+        if (category != "undefined" & category != ""){
             query.category = category
         }
     
@@ -18,7 +18,7 @@ export const getProducts = async (req, res) =>{
             }
         }
 
-        if (sort != "undefined") {
+        if (sort != "undefined" & sort != "") {
             options.sort.price = sort
         }
         
