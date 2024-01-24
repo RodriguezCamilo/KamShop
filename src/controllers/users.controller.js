@@ -1,6 +1,7 @@
 import { userModel } from "../models/users.models.js"
 import { sendRecoveryMail } from "../config/nodemailer.js"
 import { createHash } from '../utils/bcrypt.js'
+import {deletedUser} from '../config/nodemailer.js'
 import crypto from 'crypto'
 
 export const getUsers = async (req, res) => {
@@ -114,12 +115,12 @@ export const uploadFile = async (req, res) => {
     const { id } = req.params
     const files = req.files
     if (!files || files.length === 0) {
-        return res.status(400).send({ message: 'No se subieron archivos.' });
+        return res.status(400).send({ respuesta: 'No se subieron archivos.' });
     }
     try {
         const user = await userModel.findById(id)
         if (!user) {
-            return res.status(404).send({ message: 'Usuario no encontrado.' });
+            return res.status(404).send({ respuesta: 'Usuario no encontrado.' });
         }
         const updatedDocuments = files.map(file => ({
             name: file.originalname,
@@ -128,9 +129,32 @@ export const uploadFile = async (req, res) => {
         user.documents.push(...updatedDocuments);
         await user.save();
 
-        res.status(200).send({ message: 'Documentos subidos exitosamente.', documents: user.documents });
+        res.status(200).send({ respuesta: 'Documentos subidos exitosamente.', documentos: user.documents });
     } catch (error) {
         console.error('Error al subir documentos:', error);
-        res.status(500).send({ message: 'Error al subir documentos' });
+        res.status(500).send({ respuesta: 'Error al subir documentos' });
+    }
+}
+
+export const deleteInactivity = async (req, res) => {
+    const inactivity = new Date(new Date().setDate(new Date().getDate() - 2))
+
+    const filter = { lastConnection: { $lt: inactivity } }
+
+    try {
+        const usersToDelete = await userModel.find(filter, 'email')
+
+        const result = await userModel.deleteMany(filter)
+        if (result.deletedCount > 0) {
+            usersToDelete.forEach(user => {
+                deletedUser(user.email)
+            })
+            res.status(200).send({respuesta: 'Usuarios eliminados correctamente', eliminados: result.deletedCount})
+        }   else {
+            res.status(404).send({ respuesta: 'No se encontraron usuarios para eliminar' });
+        }
+
+    } catch (error) {
+        res.status(400).send({ respuesta: 'Error en borrar usuario', mensaje: error })
     }
 }

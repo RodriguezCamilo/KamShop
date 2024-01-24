@@ -47,3 +47,21 @@ export const sendTicket = (email, ticket) => {
         }
     })
 }
+
+export const deletedUser = (email) => {
+    const mailOptions = {
+        from: 'develokam@gmail.com',
+        to: email,
+        subject: 'KAMSHOP - Usuario eliminado.',
+        html: `<div><h1>Hemos eliminado su usuario.</h1> 
+        <h3>Le informamos cordialmente que su usuario ha sido eliminado debido a inactividad, gracias por usar nuestros servicios.</h3><br/>
+        <p>Saludos, el equipo de soportde de KamShop.</p></div>`
+    }
+    transport.sendMail(mailOptions, (error, info) => {
+        if (error) {
+            console.log(error)
+        } else {
+            console.log('Email enviado correctamente')
+        }
+    })
+}
